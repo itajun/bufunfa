@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.EnableCaching
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
+
 @SpringBootApplication
 @EnableCaching
 @EnableTransactionManagement

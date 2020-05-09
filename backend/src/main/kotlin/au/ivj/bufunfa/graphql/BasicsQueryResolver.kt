@@ -5,6 +5,6 @@ import com.coxautodev.graphql.tools.GraphQLQueryResolver
 import org.springframework.stereotype.Component
 
 @Component
-class CategoryQueryResolver(val categoryRepository: CategoryRepository) : GraphQLQueryResolver {
+class BasicsQueryResolver(val categoryRepository: CategoryRepository) : GraphQLQueryResolver {
     fun categories() = categoryRepository.findAll().toList()
 }

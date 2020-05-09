@@ -9,3 +9,6 @@ interface CategoryRepository : CrudRepository<Category, Long> {
 interface AccountRepository : CrudRepository<Account, Long> {
     fun findByName(name: String): Account?
 }
+
+interface TransactionRepository : CrudRepository<Transaction, Long> {
+}

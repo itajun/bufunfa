@@ -1,0 +1,20 @@
+scalar Date
+
+extend type Query {
+  transactions: [Transaction]
+}
+
+extend type Mutation {
+  deleteTransaction(transactionId: Long!): Boolean
+}
+
+type Transaction {
+  id: Long!
+  description: String!
+  account: Account!
+  category: Category!
+  amount: Long!
+  confirmedAmount: Long
+  date: Date!
+  confirmedDate: Date
+}

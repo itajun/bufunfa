@@ -2,7 +2,16 @@ type Query {
   categories: [Category]
 }
 
+type Mutation {
+
+}
+
 type Category {
+  id: Long!
+  name: String!
+}
+
+type Account {
   id: Long!
   name: String!
 }
