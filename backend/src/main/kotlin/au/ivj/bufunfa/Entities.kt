@@ -16,6 +16,8 @@ class Category(
 class Account(
     val name: String,
 
+    val initialAmount: Long,
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null

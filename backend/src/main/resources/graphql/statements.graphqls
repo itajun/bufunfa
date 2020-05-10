@@ -1,0 +1,23 @@
+scalar Date
+
+extend type Query {
+  statement(input: GetStatementInput): Statement
+}
+
+type Statement {
+    transactions: [Transaction]!
+    initialAccountTotals: [AccountTotal]!
+    date: Date!
+}
+
+type AccountTotal {
+    accountId: Long!
+    amount: Long!
+}
+
+input GetStatementInput {
+    from: Date!
+    to: Date!
+    accounts: [Long]
+    categories: [Long]
+}

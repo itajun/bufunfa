@@ -1,5 +1,6 @@
 type Query {
   categories: [Category]
+  accounts: [Account]
 }
 
 type Mutation {
@@ -14,4 +15,5 @@ type Category {
 type Account {
   id: Long!
   name: String!
+  initialAmount: Long!
 }
