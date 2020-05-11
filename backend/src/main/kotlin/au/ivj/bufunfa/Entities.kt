@@ -4,7 +4,13 @@ import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
+@Table(
+    indexes = [
+        Index(name = "nameIdx", columnList = "name", unique = true)
+    ]
+)
 class Category(
+    @Column(unique = true)
     val name: String,
 
     @Id
@@ -13,7 +19,13 @@ class Category(
 )
 
 @Entity
+@Table(
+    indexes = [
+        Index(name = "nameIdx", columnList = "name", unique = true)
+    ]
+)
 class Account(
+    @Column(unique = true)
     val name: String,
 
     val initialAmount: Long,
@@ -24,6 +36,15 @@ class Account(
 )
 
 @Entity
+@Table(
+    indexes = [
+        Index(name = "descriptionIdx", columnList = "description"),
+        Index(name = "accountIdx", columnList = "account_id"),
+        Index(name = "categoryIdx", columnList = "category_id"),
+        Index(name = "dateIdx", columnList = "date"),
+        Index(name = "confirmedDateIdx", columnList = "confirmedDate")
+    ]
+)
 class Transaction(
     val description: String,
 

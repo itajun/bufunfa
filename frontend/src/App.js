@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from './components/Layout';
+import Layout from './components/layout/Layout';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -17,7 +17,11 @@ cache.writeData({
 const client = new ApolloClient({
   uri: 'http://localhost:8080/graphql',
   cache,
-  resolvers: {}
+  resolvers: {},
+  onError: ({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) console.error(`[GraphQL error]: ${networkError}`);
+    if (networkError) console.error(`[Network error]: ${networkError}`);
+  }
 });
 
 function App() {

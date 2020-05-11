@@ -20,3 +20,8 @@ class AccountTotal(
     val accountId: Long,
     val amount: Long
 )
+
+class CreateAccountInput(
+    val name: String,
+    val initialAmount: Long
+)

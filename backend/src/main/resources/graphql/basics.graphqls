@@ -4,7 +4,7 @@ type Query {
 }
 
 type Mutation {
-
+    createAccount(input: CreateAccountInput!): Account!
 }
 
 type Category {
@@ -16,4 +16,9 @@ type Account {
   id: Long!
   name: String!
   initialAmount: Long!
+}
+
+input CreateAccountInput {
+    name: String!
+    initialAmount: Long!
 }
