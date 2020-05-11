@@ -1,5 +1,6 @@
 import { useQuery, useApolloClient } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import { startOfMonth, lastDayOfMonth } from 'date-fns';
 
 const DASHBOARD_SETTINGS = gql`
 {
@@ -13,14 +14,14 @@ const DASHBOARD_SETTINGS = gql`
 
 export const DEFAULT_DASHBOARD_SETTINGS = {
     __typename: 'DashboardSettings',
-    fromDate: new Date().getTime(),
-    toDate: new Date().setMonth(new Date().getMonth() + 1),
+    fromDate: startOfMonth(new Date()).getTime(),
+    toDate: lastDayOfMonth(new Date()).getTime(),
     accounts: [],
 }
 
 const useDashboardSettings = () => {
     const client = useApolloClient();
-    const { error, data: {dashboardSettings} } = useQuery(DASHBOARD_SETTINGS);
+    const { error, data: { dashboardSettings } } = useQuery(DASHBOARD_SETTINGS);
     if (error) console.error(error)
 
     const updateDashboardSettings = settings => {

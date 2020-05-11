@@ -3,7 +3,7 @@ package au.ivj.bufunfa.service
 import au.ivj.bufunfa.*
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
-import java.util.stream.Collectors
+import kotlin.streams.toList
 
 @Service
 class StatementService(
@@ -16,20 +16,18 @@ class StatementService(
                 .stream()
                 .filter { getStatementInput.accounts?.contains(it.account.id) ?: true }
                 .filter { getStatementInput.categories?.contains(it.category.id) ?: true }
-                .sorted(
-                    nullsFirst(compareBy(Transaction::confirmedDate, Transaction::date))
-                )
-                .collect(Collectors.toList<Transaction>())
+                .sorted(compareBy(Transaction::date))
+                .toList()
 
-        val accountTotals = transactions
-            .stream()
-            .map(Transaction::account)
-            .distinct()
+        val accountTotals = accountRepository
+            .findAll()
+            .filter { getStatementInput.accounts?.contains(it.id) ?: true }
             .map {
-                val sum = accountRepository.findConfirmedAccountTotalsBefore(getStatementInput.from, setOf(it.id!!)).firstOrNull()
+                val sum =
+                    accountRepository.findAccountTotalsBefore(getStatementInput.from, setOf(it.id!!)).firstOrNull()
                 AccountTotal(it.id!!, it.initialAmount + (sum?.amount ?: 0))
             }
-            .collect(Collectors.toList<AccountTotal>())
+            .toList()
 
         return Statement(
             transactions,

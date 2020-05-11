@@ -41,8 +41,7 @@ class Account(
         Index(name = "descriptionIdx", columnList = "description"),
         Index(name = "accountIdx", columnList = "account_id"),
         Index(name = "categoryIdx", columnList = "category_id"),
-        Index(name = "dateIdx", columnList = "date"),
-        Index(name = "confirmedDateIdx", columnList = "confirmedDate")
+        Index(name = "dateIdx", columnList = "date")
     ]
 )
 class Transaction(
@@ -56,11 +55,7 @@ class Transaction(
 
     val amount: Long,
 
-    val confirmedAmount: Long?,
-
     val date: LocalDate,
-
-    val confirmedDate: LocalDate?,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,6 +5,7 @@ extend type Query {
 }
 
 extend type Mutation {
+  createTransaction(input: CreateTransactionInput): Transaction
   deleteTransaction(transactionId: Long!): Boolean
 }
 
@@ -14,7 +15,13 @@ type Transaction {
   account: Account!
   category: Category!
   amount: Long!
-  confirmedAmount: Long
   date: Date!
-  confirmedDate: Date
+}
+
+input CreateTransactionInput {
+  description: String!
+  accountId: Long!
+  categoryId: Long!
+  amount: Long!
+  date: Date!
 }

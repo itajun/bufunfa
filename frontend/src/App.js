@@ -19,7 +19,7 @@ const client = new ApolloClient({
   cache,
   resolvers: {},
   onError: ({ graphQLErrors, networkError }) => {
-    if (graphQLErrors) console.error(`[GraphQL error]: ${networkError}`);
+    if (graphQLErrors) console.error(`[GraphQL errors]: ${JSON.stringify(graphQLErrors)}`);
     if (networkError) console.error(`[Network error]: ${networkError}`);
   }
 });
@@ -27,7 +27,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Layout />
+        <Layout />
     </ApolloProvider>
   );
 }

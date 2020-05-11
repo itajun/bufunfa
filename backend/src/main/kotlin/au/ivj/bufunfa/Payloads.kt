@@ -25,3 +25,15 @@ class CreateAccountInput(
     val name: String,
     val initialAmount: Long
 )
+
+class CreateCategoryInput(
+    val name: String
+)
+
+class CreateTransactionInput(
+    val description: String,
+    val accountId: Long,
+    val categoryId: Long,
+    val amount: Long,
+    val date: LocalDate
+)

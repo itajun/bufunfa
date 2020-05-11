@@ -24,8 +24,6 @@ class Temporary {
                     accountRepository.findByName("Acc 1")!!,
                     categoryRepository.findByName("Cat 1")!!,
                     10,
-                    4214,
-                    LocalDate.now(),
                     LocalDate.now()
                 ),
                 Transaction(
@@ -33,8 +31,6 @@ class Temporary {
                     accountRepository.findByName("Acc 2")!!,
                     categoryRepository.findByName("Cat 2")!!,
                     10,
-                    1021,
-                    LocalDate.now(),
                     LocalDate.now().minusMonths(3)
                 ),
                 Transaction(
@@ -42,8 +38,6 @@ class Temporary {
                     accountRepository.findByName("Acc 1")!!,
                     categoryRepository.findByName("Cat 2")!!,
                     10,
-                    213,
-                    LocalDate.now().minusMonths(1),
                     LocalDate.now().minusMonths(1)
                 )
             )
