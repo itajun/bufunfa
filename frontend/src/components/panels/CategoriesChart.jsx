@@ -1,6 +1,9 @@
 import React from "react";
-import { PieChart, Pie } from "recharts";
+import { PieChart, Pie, Cell, Legend } from "recharts";
 import { useMemo } from "react";
+import { Tooltip } from "@material-ui/core";
+
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 export default ({ transactions }) => {
   const [inOut, categories] = useMemo(() => {
@@ -39,7 +42,10 @@ export default ({ transactions }) => {
         outerRadius={60}
         fill="#8884d8"
         label={false}
-      />
+      >
+        <Cell fill="green" />
+        <Cell fill="red" />
+      </Pie>
       <Pie
         data={categories}
         dataKey="value"
@@ -48,8 +54,13 @@ export default ({ transactions }) => {
         innerRadius={70}
         outerRadius={90}
         fill="#82ca9d"
+        paddingAngle={5}
         label={(value) => value.name}
-      />
+      >
+        {categories.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+        ))}
+      </Pie>
     </PieChart>
   );
 };
