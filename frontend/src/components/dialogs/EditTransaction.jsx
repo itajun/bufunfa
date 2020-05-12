@@ -27,7 +27,7 @@ const CLEAR_DATA = {
   description: "",
   accountId: null,
   categoryId: null,
-  amount: null,
+  amount: "",
   date: Date(),
 };
 

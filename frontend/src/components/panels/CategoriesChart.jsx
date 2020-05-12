@@ -30,11 +30,11 @@ export default ({ transactions }) => {
   }, [transactions]);
 
   return (
-    <PieChart width={300} height={300}>
+    <PieChart width={400} height={300}>
       <Pie
         data={inOut}
         dataKey="value"
-        cx={150}
+        cx={200}
         cy={150}
         outerRadius={60}
         fill="#8884d8"
@@ -43,7 +43,7 @@ export default ({ transactions }) => {
       <Pie
         data={categories}
         dataKey="value"
-        cx={150}
+        cx={200}
         cy={150}
         innerRadius={70}
         outerRadius={90}
