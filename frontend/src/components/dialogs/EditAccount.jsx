@@ -83,7 +83,7 @@ export default ({ payload, callback }) => {
             label="Name"
             className={classes.textField}
             inputRef={register({ required: true })}
-            error={errors.name}
+            error={!!errors.name}
           />
           <TextField
             margin="dense"
@@ -92,7 +92,7 @@ export default ({ payload, callback }) => {
             label="Initial Amount"
             className={classes.textField}
             inputRef={register({ required: true })}
-            error={errors.initialAmount}
+            error={!!errors.initialAmount}
             defaultValue={account.initialAmount}
             InputProps={{
               inputComponent: NumberFormatEx,
