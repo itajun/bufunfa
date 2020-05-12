@@ -15,6 +15,7 @@ import { startOfMonth, lastDayOfMonth } from "date-fns";
 import { Grid } from "@material-ui/core";
 import FilterBar from "./FilterBar";
 import AccountsTable from "../../panels/AccountsTable";
+import CategoriesChart from "../../panels/CategoriesChart";
 
 export default () => {
   const { dashboardSettings, updateDashboardSettings } = useDashboardSettings();
@@ -84,7 +85,16 @@ export default () => {
             />
           </Grid>
           <Grid item sm={12} md={3}>
-            <AccountsTable statement={statementData.statement} />
+            <Grid container spacing={2}>
+              <Grid item sm={12}>
+                <AccountsTable statement={statementData.statement} />
+              </Grid>
+              <Grid item sm={12}>
+                <CategoriesChart
+                  transactions={statementData.statement.transactions}
+                />
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
