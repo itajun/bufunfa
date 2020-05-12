@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 export const CREATE_TRANSACTION = gql`
   mutation CreateTransaction($input: CreateTransactionInput!) {
@@ -15,12 +15,12 @@ export const CREATE_TRANSACTION = gql`
       }
       amount
       date
-    }  
-  }  
+    }
+  }
 `;
 
 export const DELETE_TRANSACTION = gql`
-    mutation deleteTransaction($transactionId: Long!) {
-        deleteTransaction(transactionId: $transactionId)
-    }
+  mutation deleteTransaction($transactionId: Long!) {
+    deleteTransaction(transactionId: $transactionId)
+  }
 `;

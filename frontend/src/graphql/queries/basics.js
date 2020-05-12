@@ -1,20 +1,20 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 export const GET_CATEGORIES = gql`
-query Categories {
+  query Categories {
     categories {
-        id
-        name
+      id
+      name
     }
-}
-`
+  }
+`;
 
 export const GET_ACCOUNTS = gql`
-query Accounts {
+  query Accounts {
     accounts {
-        id
-        name
-        initialAmount
+      id
+      name
+      initialAmount
     }
-}
-`
+  }
+`;

@@ -16,8 +16,11 @@
     "apollo-boost": "^0.4.7",
     "date-fns": "^2.13.0",
     "graphql": "^15.0.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2",
     "lodash": "^4.17.15",
     "numeral": "^2.0.6",
+    "prettier": "2.0.5",
     "pubsub-js": "^1.8.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -32,7 +35,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.js src/**/*.jsx"
+    "lint": "eslint src/**/*.js src/**/*.jsx",
+    "prettier": "prettier --write src/**/*.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -50,13 +54,6 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.0.0",
-    "eslint-config-react-app": "^5.2.1",
-    "eslint-plugin-flowtype": "^4.7.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^4.0.0"
+    "eslint-config-prettier": "^6.11.0"
   }
 }

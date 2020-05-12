@@ -1,18 +1,18 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 export const GET_TRANSACTIONS = gql`
-    {
-        transactions {
-            id
-            description
-            account {
-                name
-            }
-            category {
-                name
-            }
-            amount
-            date
-        }
+  {
+    transactions {
+      id
+      description
+      account {
+        name
+      }
+      category {
+        name
+      }
+      amount
+      date
     }
+  }
 `;
