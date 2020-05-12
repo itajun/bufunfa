@@ -17,7 +17,7 @@ import { useForm, Controller } from "react-hook-form";
 import { CREATE_TRANSACTION } from "../../graphql/mutations/transactions";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { showAlert, extractMessage } from "../../util/alert";
-import { floatToCents, graphqlDate } from "../../util/formatters";
+import { currToCents, graphqlDate } from "../../util/formatters";
 import NumberFormatEx from "../extension/NumberFormatEx";
 import { GET_CATEGORIES, GET_ACCOUNTS } from "../../graphql/queries/basics";
 import { KeyboardDatePicker } from "@material-ui/pickers";
@@ -67,7 +67,7 @@ export default ({ payload, callback }) => {
           variables: {
             input: {
               ...input,
-              amount: floatToCents(input.amount),
+              amount: currToCents(input.amount),
               date: graphqlDate(input.date),
             },
           },

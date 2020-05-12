@@ -14,31 +14,59 @@ class Temporary {
         transactionRepository: TransactionRepository
     ): CommandLineRunner? {
         return CommandLineRunner { args: Array<String?>? ->
-            listOf("Cat 1", "Cat 2", "Cat 3")
+            listOf("Leisure", "Groceries", "Salary")
                 .forEach { categoryRepository.save(Category(it)) }
-            listOf("Acc 1", "Acc 2", "Acc 3")
-                .forEach { accountRepository.save(Account(it, 1000)) }
+            listOf("Cheque", "Cash")
+                .forEach { accountRepository.save(Account(it, 10000)) }
             listOf(
                 Transaction(
-                    "First transaction",
-                    accountRepository.findByName("Acc 1")!!,
-                    categoryRepository.findByName("Cat 1")!!,
-                    1000,
+                    "Aldi",
+                    accountRepository.findByName("Cheque")!!,
+                    categoryRepository.findByName("Groceries")!!,
+                    -2552,
                     LocalDate.now()
                 ),
                 Transaction(
-                    "Second transaction",
-                    accountRepository.findByName("Acc 2")!!,
-                    categoryRepository.findByName("Cat 2")!!,
-                    1000,
-                    LocalDate.now().minusMonths(3)
+                    "Coffee",
+                    accountRepository.findByName("Cash")!!,
+                    categoryRepository.findByName("Leisure")!!,
+                    -540,
+                    LocalDate.now().minusDays(1)
                 ),
                 Transaction(
-                    "Third transaction",
-                    accountRepository.findByName("Acc 1")!!,
-                    categoryRepository.findByName("Cat 2")!!,
-                    1000,
-                    LocalDate.now().minusMonths(1)
+                    "Coffee",
+                    accountRepository.findByName("Cash")!!,
+                    categoryRepository.findByName("Leisure")!!,
+                    -540,
+                    LocalDate.now().minusDays(2)
+                ),
+                Transaction(
+                    "Coffee",
+                    accountRepository.findByName("Cash")!!,
+                    categoryRepository.findByName("Leisure")!!,
+                    -540,
+                    LocalDate.now().minusDays(3)
+                ),
+                Transaction(
+                    "Salary",
+                    accountRepository.findByName("Cheque")!!,
+                    categoryRepository.findByName("Salary")!!,
+                    150000,
+                    LocalDate.now().withDayOfMonth(1)
+                ),
+                Transaction(
+                    "Coffee",
+                    accountRepository.findByName("Cash")!!,
+                    categoryRepository.findByName("Leisure")!!,
+                    -540,
+                    LocalDate.now().withDayOfMonth(2).minusMonths(1)
+                ),
+                Transaction(
+                    "Salary",
+                    accountRepository.findByName("Cheque")!!,
+                    categoryRepository.findByName("Salary")!!,
+                    150000,
+                    LocalDate.now().minusMonths(1).withDayOfMonth(1)
                 )
             )
                 .forEach { transactionRepository.save(it) }

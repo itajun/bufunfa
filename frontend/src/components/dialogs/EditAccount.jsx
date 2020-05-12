@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { CREATE_ACCOUNT } from "../../graphql/mutations/basics";
 import { useMutation } from "@apollo/react-hooks";
 import { showAlert, extractMessage } from "../../util/alert";
-import { floatToCents } from "../../util/formatters";
+import { currToCents } from "../../util/formatters";
 import NumberFormatEx from "../extension/NumberFormatEx";
 
 const useStyles = makeStyles((theme) => ({
@@ -58,7 +58,7 @@ export default ({ payload, callback }) => {
           variables: {
             input: {
               ...input,
-              initialAmount: floatToCents(input.initialAmount),
+              initialAmount: currToCents(input.initialAmount),
             },
           },
         });

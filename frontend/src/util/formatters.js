@@ -46,11 +46,12 @@ export const centToCurr = (value) => {
   return numeral(value).divide(100).format("0,0.00");
 };
 
-export const floatToCents = (value) => {
-  let float = value;
+export const currToCents = (value) => {
   if (typeof value === "string") {
-    value = value.replace(",", "");
-    float = parseFloat(value);
+    if (value.indexOf(".") < 0) {
+      value += "00";
+    }
+    value = value.replace(/[,.]/g, "");
   }
-  return Math.trunc(float * 100);
+  return parseInt(value);
 };
