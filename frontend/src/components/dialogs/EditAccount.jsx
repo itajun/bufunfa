@@ -14,6 +14,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { showAlert, extractMessage } from "../../util/alert";
 import { currToCents } from "../../util/formatters";
 import NumberFormatEx from "../extension/NumberFormatEx";
+import { GET_ACCOUNTS } from "../../graphql/queries/basics";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -60,6 +61,7 @@ export default ({ payload, callback }) => {
               ...input,
               initialAmount: currToCents(input.initialAmount),
             },
+            refetchQueries: { query: GET_ACCOUNTS },
           },
         });
       }

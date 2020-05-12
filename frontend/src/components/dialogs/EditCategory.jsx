@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { CREATE_CATEGORY } from "../../graphql/mutations/basics";
 import { useMutation } from "@apollo/react-hooks";
 import { showAlert, extractMessage } from "../../util/alert";
+import { GET_CATEGORIES } from "../../graphql/queries/basics";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -53,6 +54,7 @@ export default ({ payload, callback }) => {
       } else {
         entity = await createCategoryMutation({
           variables: { input },
+          refetchQueries: { query: GET_CATEGORIES },
         });
       }
       callback && callback({ created: true, entity });
