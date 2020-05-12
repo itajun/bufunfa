@@ -1,4 +1,3 @@
-/.idea/
-/target/
-/bufunfa.iml
-/transaction.log
+.idea
+*.log
+*.iml
