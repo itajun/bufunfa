@@ -12,6 +12,7 @@ type Statement {
 
 type AccountTotal {
     accountId: Long!
+    accountName: String!
     amount: Long!
 }
 

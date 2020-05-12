@@ -13,7 +13,7 @@ interface AccountRepository : CrudRepository<Account, Long> {
 
     @Query(
         "SELECT " +
-                "    new au.ivj.bufunfa.AccountTotal(t.account.id, coalesce(SUM(t.amount), 0)) " +
+                "    new au.ivj.bufunfa.AccountTotal(t.account.id, t.account.name, coalesce(SUM(t.amount), 0)) " +
                 "FROM " +
                 "    Transaction t " +
                 "WHERE " +

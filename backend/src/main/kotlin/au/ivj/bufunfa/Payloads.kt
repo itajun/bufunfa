@@ -18,6 +18,7 @@ class Statement(
 
 class AccountTotal(
     val accountId: Long,
+    val accountName: String,
     val amount: Long
 )
 
