@@ -25,7 +25,7 @@ class StatementService(
             .map {
                 val sum =
                     accountRepository.findAccountTotalsBefore(getStatementInput.from, setOf(it.id!!)).firstOrNull()
-                AccountTotal(it.id!!, it.name, it.initialAmount + (sum?.amount ?: 0))
+                AccountTotal(it.id, it.name, it.initialAmount + (sum?.amount ?: 0))
             }
             .toList()
 

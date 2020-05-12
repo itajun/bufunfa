@@ -13,7 +13,7 @@ class Temporary {
         accountRepository: AccountRepository,
         transactionRepository: TransactionRepository
     ): CommandLineRunner? {
-        return CommandLineRunner { args: Array<String?>? ->
+        return CommandLineRunner { _ ->
             listOf("Leisure", "Groceries", "Salary")
                 .forEach { categoryRepository.save(Category(it)) }
             listOf("Cheque", "Cash")
