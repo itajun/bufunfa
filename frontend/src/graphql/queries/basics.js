@@ -18,3 +18,9 @@ export const GET_ACCOUNTS = gql`
     }
   }
 `;
+
+export const ME = gql`
+  query Me {
+    me
+  }
+`;

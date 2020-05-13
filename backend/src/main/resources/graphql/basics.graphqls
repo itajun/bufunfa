@@ -1,6 +1,7 @@
 type Query {
   categories: [Category]
   accounts: [Account]
+  me: String!
 }
 
 type Mutation {

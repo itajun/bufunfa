@@ -25,8 +25,8 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 const CLEAR_DATA = {
   id: null,
   description: "",
-  accountId: null,
-  categoryId: null,
+  accountId: "",
+  categoryId: "",
   amount: "",
   date: Date(),
 };
@@ -103,7 +103,7 @@ export default ({ payload, callback }) => {
                 name="description"
                 label="Description"
                 inputRef={register({ required: true })}
-                error={errors.description}
+                error={!!errors.description}
                 fullWidth
               />
             </Grid>
@@ -115,7 +115,7 @@ export default ({ payload, callback }) => {
                     <Select
                       labelId="accountIdLabel"
                       id="accountId"
-                      error={errors.accountId}
+                      error={!!errors.accountId}
                       style={{ minWidth: "500px" }}
                     >
                       {accountsData.accounts.map((e) => (
@@ -138,7 +138,7 @@ export default ({ payload, callback }) => {
                       labelId="categoryIdLabel"
                       id="categoryId"
                       style={{ minWidth: "500px" }}
-                      error={errors.categoryId}
+                      error={!!errors.categoryId}
                     >
                       {categoriesData.categories.map((e) => (
                         <MenuItem value={e.id}>{e.name}</MenuItem>
@@ -161,7 +161,7 @@ export default ({ payload, callback }) => {
                     margin="normal"
                     id="date-picker-inline"
                     label="Date"
-                    error={errors.date}
+                    error={!!errors.date}
                     autoOk
                     KeyboardButtonProps={{
                       "aria-label": "change date",
@@ -183,7 +183,7 @@ export default ({ payload, callback }) => {
                 name="amount"
                 label="Amount"
                 inputRef={register({ required: true })}
-                error={errors.amount}
+                error={!!errors.amount}
                 defaultValue={transaction.amount}
                 InputProps={{
                   inputComponent: NumberFormatEx,

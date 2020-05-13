@@ -6,6 +6,7 @@ const LAYOUT_SETTINGS = gql`
     layoutSettings @client {
       drawerOpen
       selectedMenu
+      user
     }
   }
 `;
@@ -14,6 +15,7 @@ export const DEFAULT_LAYOUT_SETTINGS = {
   __typename: "LayoutSettings",
   drawerOpen: false,
   selectedMenu: "dashboard",
+  user: false,
 };
 
 const useLayoutSettings = () => {

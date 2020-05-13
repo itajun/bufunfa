@@ -18,6 +18,14 @@ const client = new ApolloClient({
   uri: "http://localhost:8080/graphql",
   cache,
   resolvers: {},
+  request: (operation) => {
+    const token = localStorage.getItem("token");
+    operation.setContext({
+      headers: {
+        authorization: token ? `Basic ${token}` : "",
+      },
+    });
+  },
   onError: ({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
       console.error(`[GraphQL errors]: ${JSON.stringify(graphQLErrors)}`);
