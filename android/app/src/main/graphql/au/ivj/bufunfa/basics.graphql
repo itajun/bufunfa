@@ -1,0 +1,14 @@
+
+  query GetCategories {
+    categories {
+      id
+      name
+    }
+  }
+
+  mutation CreateCategory($input: CreateCategoryInput!) {
+    createCategory(input: $input) {
+      id
+      name
+    }
+  }

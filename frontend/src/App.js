@@ -14,8 +14,10 @@ cache.writeData({
   },
 });
 
+const serverUrl =
+  window.location.port === "3000" ? "http://localhost:8080" : "";
 const client = new ApolloClient({
-  uri: "http://localhost:8080/graphql",
+  uri: `${serverUrl}/graphql`,
   cache,
   resolvers: {},
   request: (operation) => {
