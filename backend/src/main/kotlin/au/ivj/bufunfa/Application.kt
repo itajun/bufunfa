@@ -36,7 +36,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
             .authorizeRequests()
-            .antMatchers("/", "/manifest.json", "*.ico", "*.png", "/static/**").permitAll()
+            .antMatchers("/", "/static/**").permitAll()
             .antMatchers("/graphql/**", "/subscriptions/**").hasRole("USER")
             .antMatchers("/graphiql/**").hasRole("ADMIN")
             .anyRequest().authenticated()
