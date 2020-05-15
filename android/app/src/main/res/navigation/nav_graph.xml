@@ -18,14 +18,5 @@
         android:id="@+id/transactionsFragment"
         android:name="au.ivj.bufunfa.TransactionsFragment"
         android:label="Transactions"
-        tools:layout="@layout/fragment_transactions" >
-        <action
-            android:id="@+id/new_transaction"
-            app:destination="@id/newTransactionFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/newTransactionFragment"
-        android:name="au.ivj.bufunfa.NewTransactionFragment"
-        android:label="New Transaction"
-        tools:layout="@layout/fragment_new_transaction" />
+        tools:layout="@layout/fragment_transactions" />
 </navigation>

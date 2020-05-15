@@ -1,19 +1,21 @@
 package au.ivj.bufunfa
 
+import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.observe
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.findNavController
-import androidx.navigation.navOptions
+import androidx.navigation.fragment.findNavController
 import au.ivj.bufunfa.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
 
@@ -31,25 +33,66 @@ class LoginFragment : Fragment() {
         loginBinding.viewModel = viewModel
         loginBinding.lifecycleOwner = this
 
+        viewModel.authenticated.observe(viewLifecycleOwner) {
+            if (it) {
+                findNavController().navigate(LoginFragmentDirections.loginSuccess())
+            }
+        }
+
+        viewModel.tryFromSaved()
+
         return loginBinding.root
     }
 }
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(application: Application) : AndroidViewModel(application) {
     var userName = ""
     var password = ""
+    val authenticated = MutableLiveData(false)
     val loginError = MutableLiveData(false)
 
-    fun login(view: View) {
+    fun tryFromSaved() {
+        try {
+            getApplication<Application>().getSharedPreferences("credentials", Context.MODE_PRIVATE)
+                .let {
+                    val userName = it.getString("userName", null)
+                    val password = it.getString("password", null)
+
+                    userName?.let {
+                        password?.let {
+                            viewModelScope.launch {
+                                if (GraphQLService.instance.tryConnect(
+                                        SERVER_URL,
+                                        userName,
+                                        password
+                                    )
+                                ) {
+                                    authenticated.value = true
+                                }
+                            }
+                        }
+                    }
+                }
+        } catch (e: Throwable) {
+            Log.e(null, e.message, e)
+            authenticated.value = false
+        }
+    }
+
+    fun login() {
         viewModelScope.launch {
             if (GraphQLService.instance.tryConnect(SERVER_URL, userName, password)) {
-                val action =
-                    LoginFragmentDirections
-                        .loginSuccess()
-
-                view.findNavController().navigate(action, navOptions {  })
+                getApplication<Application>().getSharedPreferences(
+                    "credentials",
+                    Context.MODE_PRIVATE
+                ).edit(true) {
+                    putString("userName", userName)
+                    putString("password", password)
+                }
+                authenticated.value = true
                 loginError.value = false
             } else {
+                authenticated.value = false
                 loginError.value = true
             }
         }

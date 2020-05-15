@@ -1,18 +1,19 @@
 
-  query GetCategories {
-    categories {
-      id
+query GetTransaction {
+  transactions {
+    id
+    description
+    account {
       name
     }
-  }
-
-  mutation CreateCategory($input: CreateCategoryInput!) {
-    createCategory(input: $input) {
-      id
+    category {
       name
     }
+    amount
+    date
   }
+}
 
-  query Me {
-    me
-  }
+query Me {
+  me
+}

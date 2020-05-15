@@ -1,59 +1,100 @@
 package au.ivj.bufunfa
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import au.ivj.bufunfa.databinding.FragmentTransactionsBinding
+import au.ivj.bufunfa.databinding.ItemTransactionBinding
+import com.apollographql.apollo.coroutines.toFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [TransactionsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TransactionsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    val viewModel: TransactionsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_transactions, container, false)
-    }
+        val binding = FragmentTransactionsBinding.inflate(inflater, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TransactionsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TransactionsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        val itemRecyclerView = binding.itemRecyclerView
+        viewModel.transactions.observe(viewLifecycleOwner, Observer { transactions ->
+            itemRecyclerView.layoutManager = LinearLayoutManager(context)
+            itemRecyclerView.adapter = TransactionAdapter(transactions)
+        })
+        viewModel.fetchTransactions()
+
+        return binding.root
     }
 }
+
+class TransactionsViewModel : ViewModel() {
+    val transactions = MutableLiveData<List<Transaction>>()
+
+    @ExperimentalCoroutinesApi
+    fun fetchTransactions() { // Should go to a Repository and the service be injected
+        viewModelScope.launch {
+            GraphQLService.instance.apolloClient
+                ?.query(GetTransactionQuery())
+                ?.toFlow()
+                ?.collect { value ->
+                    transactions.value = value
+                        ?.data
+                        ?.transactions
+                        ?.map {
+                            Transaction(
+                                it?.description ?: "",
+                                "${it?.amount ?: ""}",
+                                "${it?.date ?: ""}",
+                                it?.category?.name ?: ""
+                            )
+                        }
+                        ?.toList()
+                }
+        }
+    }
+}
+
+class TransactionAdapter(private val transactions: List<Transaction>) :
+    RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
+    class TransactionViewHolder(private val itemTransactionBinding: ItemTransactionBinding) :
+        RecyclerView.ViewHolder(itemTransactionBinding.root) {
+        fun bind(transaction: Transaction) {
+            itemTransactionBinding.transaction = transaction
+            itemTransactionBinding.executePendingBindings()
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemTransactionBinding.inflate(inflater, parent, false)
+        return TransactionViewHolder(binding)
+    }
+
+    override fun getItemCount(): Int {
+        return transactions.size
+    }
+
+    override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
+        holder.bind(transactions.get(position))
+    }
+}
+
+data class Transaction(
+    val description: String,
+    val amount: String,
+    val date: String,
+    val category: String
+)
