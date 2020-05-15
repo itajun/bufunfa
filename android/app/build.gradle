@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.apollographql.apollo'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 28
@@ -16,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "au.ivj.bufunfa"
-        minSdkVersion 23
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -47,6 +48,7 @@ dependencies {
     implementation("com.apollographql.apollo:apollo-runtime:$apollo_version")
     implementation "com.apollographql.apollo:apollo-android-support:$apollo_version"
     implementation "com.apollographql.apollo:apollo-coroutines-support:$apollo_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     compileOnly("org.jetbrains:annotations:13.0")
     testCompileOnly("org.jetbrains:annotations:13.0")
 

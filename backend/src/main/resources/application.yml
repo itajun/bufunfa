@@ -1,3 +1,14 @@
 spring:
   jpa:
     show-sql: true
+
+server:
+  port: 8443
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: classpath:bufunfa.p12
+    key-store-password: password
+    key-alias: bufunfa
+  http:
+    port: 8080

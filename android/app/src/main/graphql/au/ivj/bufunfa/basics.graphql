@@ -12,3 +12,7 @@
       name
     }
   }
+
+  query Me {
+    me
+  }

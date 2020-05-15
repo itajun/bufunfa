@@ -74,17 +74,19 @@ class CategoryViewModel : ViewModel() {
     }
 
     // Don't do this in the real world :). Do this instead: https://stackoverflow.com/questions/2642777/trusting-all-certificates-using-httpclient-over-https/6378872#6378872
-    private class BlindTrustManager: X509TrustManager {
+    private class BlindTrustManager : X509TrustManager {
         override fun checkClientTrusted(p0: Array<out X509Certificate>?, p1: String?) = Unit
         override fun checkServerTrusted(p0: Array<out X509Certificate>?, p1: String?) = Unit
         override fun getAcceptedIssuers() = emptyArray<X509Certificate>()
     }
+
     private fun buildBlindSocketFactory(): SSLSocketFactory {
         val ctx: SSLContext = SSLContext.getInstance("TLS")
         ctx.init(null, arrayOf(BlindTrustManager()), null)
         return ctx.getSocketFactory()
     }
-    private class BlindHostnameVerifier: HostnameVerifier {
+
+    private class BlindHostnameVerifier : HostnameVerifier {
         override fun verify(p0: String?, p1: SSLSession?) = true
     }
 }
@@ -93,3 +95,4 @@ data class Category(
     val name: String,
     val id: Long? = null
 )
+

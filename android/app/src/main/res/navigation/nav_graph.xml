@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="au.ivj.bufunfa.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/login_success"
+            app:destination="@id/transactionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="au.ivj.bufunfa.TransactionsFragment"
+        android:label="Transactions"
+        tools:layout="@layout/fragment_transactions" >
+        <action
+            android:id="@+id/new_transaction"
+            app:destination="@id/newTransactionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newTransactionFragment"
+        android:name="au.ivj.bufunfa.NewTransactionFragment"
+        android:label="New Transaction"
+        tools:layout="@layout/fragment_new_transaction" />
+</navigation>
