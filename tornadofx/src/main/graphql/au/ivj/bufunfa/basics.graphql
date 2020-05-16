@@ -1,0 +1,19 @@
+
+query GetTransaction {
+  transactions {
+    id
+    description
+    account {
+      name
+    }
+    category {
+      name
+    }
+    amount
+    date
+  }
+}
+
+query Me {
+  me
+}
