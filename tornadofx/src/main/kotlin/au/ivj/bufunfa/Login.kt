@@ -1,5 +1,6 @@
 package au.ivj.bufunfa
 
+import javafx.scene.control.Button
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -7,12 +8,17 @@ import kotlinx.coroutines.javafx.JavaFx
 import kotlinx.coroutines.launch
 import tornadofx.*
 
-
+/**
+ * For anybody reading this code, please don't think I'd ever write a code like this in production :D. It was just the
+ * way I found to squeeze as many concepts as posslible in one class.
+ */
 class LoginView : View() {
-    val graphQLService: GraphQLService by di()
-
     override val root = Form()
+
     private val model = Model()
+    private val graphQLService: GraphQLService by di() // First view needs to use DI, as it is loaded statically and we can't inject via Spring
+
+    private var loginButton: Button by singleAssign() // Just keep a reference to change the text in a method
 
     class Model {
         var userName: String by property<String>()
@@ -21,8 +27,7 @@ class LoginView : View() {
         var password: String by property<String>()
         fun passwordProperty() = getProperty(Model::password)
 
-        var connectJob: Job? by property<Job>()
-        fun connectJobProperty() = getProperty(Model::connectJob)
+        var connectJob: Job? = null
     }
 
     fun tryConnect() {
@@ -32,8 +37,9 @@ class LoginView : View() {
                     replaceWith<DashboardView>()
                 }
             }
+            model.connectJob = null
             GlobalScope.launch(Dispatchers.JavaFx) {
-                model.connectJob = null
+                loginButton.text = "Login" // Has to happen in the UI thread. Before coroutines, this was runAsync{} ui {}
             }
         }
     }
@@ -53,16 +59,17 @@ class LoginView : View() {
                     passwordfield().bind(model.passwordProperty())
                 }
             }
-            button("Login") {
+            loginButton = button("Login") {
                 setOnAction {
-                    if (model.connectJob == null) {
+                    if (text === "Login") { // Here we are already in the UI thread.
+                        text = "Cancel"
                         tryConnect()
                     } else {
+                        text = "Login"
                         cancelConnect()
                     }
                 }
                 disableProperty().bind(model.userNameProperty().isNull)
-                textProperty().bind(model.connectJobProperty().isNull.stringBinding { if (it === true) "Login" else "Cancel" })
             }
         }
     }
