@@ -18,7 +18,7 @@
     "graphql": "^15.0.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "numeral": "^2.0.6",
     "prettier": "2.0.5",
     "pubsub-js": "^1.8.0",
