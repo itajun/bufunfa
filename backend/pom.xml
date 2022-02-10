@@ -26,7 +26,7 @@
         <kotlin.code.style>official</kotlin.code.style>
         <junit.version>4.12</junit.version>
         <java.version>1.8</java.version>
-        <hibernate.version>5.2.15.Final</hibernate.version>
+        <hibernate.version>5.4.24.Final</hibernate.version>
         <frontend-src-dir>${project.basedir}/../frontend</frontend-src-dir>
         <node.version>v12.3.1</node.version>
         <yarn.version>v1.16.0</yarn.version>
